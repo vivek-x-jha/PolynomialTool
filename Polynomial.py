@@ -1,4 +1,4 @@
-from FormattingFuncs import mathformat
+from HelperFuncs import mathformat, hornerSchedule
 
 
 class Poly:
@@ -21,7 +21,6 @@ class Poly:
 				raise ValueError('First argument of non-constant Polynomial must be non-zero')
 
 			self.coeffs = coeffs
-			# self.coeffs = {degree: coeff for degree, coeff in enumerate(reversed(coeffs))}
 			self.degree = len(coeffs) - 1
 			self.isConst = (len(coeffs) == 1)  # P(x) = c
 			self.isLinear = (len(coeffs) == 2)  # P(x) = ax + b
@@ -30,10 +29,11 @@ class Poly:
 			raise IndexError(f'Oops! {type(self).__name__} requires atleast 1 float/int arg')
 
 	def value(self, x):
-		"""Computes P(x=float/int)"""
-		val = sum(self.coeffs[i] * (x ** (self.degree - i)) for i in range(self.degree + 1))
-
-		return val
+		"""Computes P(x=float/int) by implementing a horner schedule"""
+		if self.isConst:
+			return self.coeffs[0]
+		else:
+			return hornerSchedule(self.degree - 1, self.coeffs, x)
 
 	def differentiate(self):
 		"""Computes differentiated Polynomial object: dP/dx"""
@@ -87,6 +87,7 @@ class Poly:
 				coeffs[-1] += other
 
 				return Poly(*coeffs)
+
 			except TypeError:
 				raise TypeError(f"Cannot perform field operations using '{type(other).__name__}' -"
 				                f" please use another Poly object or scalar (float/int)")

@@ -1,8 +1,18 @@
-# File includes 3 support functions for Poly.__str__ method
+def hornerSchedule(term, coeffs, input_x):
+	"""Blueprint for calculating value of a Polynomial recursively"""
+	# speeds up calculation by reducing the number of multiplication calls to the degree of the polynomial
+	if term == 0:
+		init_val = coeffs[0] * input_x + coeffs[1]
+		return init_val
+	else:
+		next_val = hornerSchedule(term - 1, coeffs, input_x) * input_x + coeffs[term + 1]
+		return next_val
 
+
+# Support functions for Poly.__str__ method
 
 def mathformat(term, coeffs):
-	"""Returns formatted term of Polynomial according to coefficient's parity and value"""
+	"""Returns formatted term of Polynomial according to coefficient's parity and input"""
 	# Booleans used for control flow to exhaust all cases
 	isLeadingTerm = (term == 0)
 	isConstTerm = (term == len(coeffs) - 1)
