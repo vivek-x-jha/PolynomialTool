@@ -31,11 +31,7 @@ class Poly:
 
 	def value(self, x):
 		"""Computes P(x=float/int)"""
-		# Makes finding y-intercept a constant time process, since y-int := P(0) = const term
-		if x == 0:
-			val = self.coeffs[-1]
-		else:
-			val = sum(self.coeffs[i] * (x ** (self.degree - i)) for i in range(self.degree + 1))
+		val = sum(self.coeffs[i] * (x ** (self.degree - i)) for i in range(self.degree + 1))
 
 		return val
 
@@ -84,12 +80,16 @@ class Poly:
 
 			return Poly(*sumcoeffs)
 
-		# Handles case when adding a scalar -> shifts polynomial vertically
 		except AttributeError:
-			coeffs = list(self.coeffs)
-			coeffs[-1] += other
+			try:
+				# Handles case when adding a scalar -> shifts polynomial vertically
+				coeffs = list(self.coeffs)
+				coeffs[-1] += other
 
-			return Poly(*coeffs)
+				return Poly(*coeffs)
+			except TypeError:
+				raise TypeError(f"Cannot perform field operations using '{type(other).__name__}' -"
+				                f" please use another Poly object or scalar (float/int)")
 
 	def __radd__(self, other):
 		"""
