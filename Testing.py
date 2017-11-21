@@ -1,4 +1,5 @@
 from Polynomial import Poly
+from Plotting import polyplot
 
 
 def Poly_test():
@@ -18,9 +19,13 @@ def Poly_test():
         print(f'P(0) = {poly.value(1)}')
 
 
-def main():
-    Poly_test()
+def graph_test():
+    p = Poly(1, -1.5, -5, 5.5)
+    q = p - 3
+
+    polyplot(p, q)
 
 
-if __name__ == '__main__':
-    main()
+Poly_test()
+graph_test()
+

@@ -52,14 +52,3 @@ def polyplot(*polys, xaxis_range=3, yaxis_range=10, titleString=''):
 	plt.legend(loc='lower right')
 	plt.show()
 
-
-def main():
-	p = Poly(1, -1.5, -5, 5.5)
-	q = p - 3
-	dpdx = p.differentiate()
-
-	polyplot(p, q, titleString=f'Sample 3{superscript("rd")} degree Polynomials')
-
-
-if __name__ == '__main__':
-	main()
