@@ -1,92 +1,55 @@
 # Polynomial Tool
-This repo provides a Polynomial class that encapsulates the usual arithmetic & calculus operations. I was curious how the `numpy.polynomial.polynomial` implemented its `Polynomial` class, and decided to create my own. I will continue to expand this project by adding more complicated operations such as *division* and *power*.
 
+Contains a Polynomial class that encapsulates the usual arithmetic & calculus operations. I was curious how the `numpy.polynomial.polynomial` implemented its `Polynomial` class, and decided to create my own.
 
-Instances of the class also have "aesthetic" looking string representations. Finally, I used `matplotlib.pyplot` to create a graphing tool to create custom plots. Here are 2 sample instances plotted:
+* **Fast:** computes the value of any Polynomial of degree **d** in *O(**d**) - via [Horner's Method](https://en.wikipedia.org/wiki/Horner%27s_method)*
+* **Visual:** includes Plotting tool for custom graphing via `matplotlib.pyplot`
+* **Pretty:** prints "mathematical" representation of Polynomial in a more readable format
 
-![Sample 3rd degree Polynomials](screenshots/cubics.png)
+I will continue to expand this project by adding more complicated operations such as *division* and *power*.
 
 ## Implementation
 
-`Poly(1, 0, -3, -1, 0.5, -3.14)`  **--->**  `P(x) = x⁵ - 3.0x³ - x² + 0.5x - 3.14`
+To create a new Polynomial, pass in any number of scalars into `Poly()`, each representing the respective degree's coefficient in descending order. For example:
 
+```python
+$ import Polynomial
+$ p = Polynomial.Poly(1, 0, -3, -1, 0.5, -3.14)
+$ print(p)
 
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
+x⁵ - 3.0x³ - x² + 0.5x - 3.14
 ```
 
-And repeat
 
-```
-until finished
-```
+## Supported Operations
 
-End with an example of getting some data out of the system or using it for a little demo
+#### Calculus
+* **Derivative:** `differentiate()` returns differentiated `Poly` object
+* **Integral:** `integrate(c)` returns integrated `Poly` object; c is the integrating constant (default = 0)
+
+#### Algebra
+* **Addition:** `__add__()` returns summed `Poly` objects
+* **Scalar Multiplication:** `__mul__()` returns scaled `Poly` object
+
+## Visualization
+
+To graph Polynomials, pass in any number of `Poly()` objects into `polyplot()` - keyword arguments include:
+* *xaxis_range* - controls absolute size of x-axis (default = 3)
+* *yaxis_range* - controls absolute size of y-axis (default = 10)
+* *titleString* - sets custom plot title above graph (default = No title)
+
+```python
+p1 = Poly(1, -1.5, -5, 5.5)
+p2 = p1 - 3
+
+polyplot(p1, p2)
+```
+![Sample 3rd degree Polynomials](screenshots/cubics.png)
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+[*Coming Soon*] - Currently working on unit tests and will detail each test in this section.
 
-### Break down into end to end tests
 
-Explain what these tests test and why
 
-```
-Give an example
-```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
