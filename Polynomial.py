@@ -1,4 +1,4 @@
-from HelperFuncs import mathformat, hornerSchedule
+from HelperFuncs import mathformat, horner
 
 
 class Poly:
@@ -33,7 +33,7 @@ class Poly:
 		if self.isConst:
 			return self.coeffs[0]
 		else:
-			return hornerSchedule(self.degree - 1, self.coeffs, x)
+			return horner(self.degree - 1, self.coeffs, x)
 
 	def differentiate(self):
 		"""Computes differentiated Polynomial object: dP/dx"""

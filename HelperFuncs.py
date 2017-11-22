@@ -1,11 +1,11 @@
-def hornerSchedule(term, coeffs, input_x):
+def horner(term, coeffs, input_x):
 	"""Blueprint for calculating value of a Polynomial recursively"""
 	# speeds up calculation by reducing the number of multiplication calls to the degree of the polynomial
 	if term == 0:
 		init_val = coeffs[0] * input_x + coeffs[1]
 		return init_val
 	else:
-		next_val = hornerSchedule(term - 1, coeffs, input_x) * input_x + coeffs[term + 1]
+		next_val = horner(term - 1, coeffs, input_x) * input_x + coeffs[term + 1]
 		return next_val
 
 
