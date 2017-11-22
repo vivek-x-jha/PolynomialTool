@@ -28,7 +28,7 @@ def polyplot(*polys, xaxis_range=3, yaxis_range=10, titleString=''):
 	uniform_xinterval = lambda num=50: np.linspace(-1 * xaxis_range, xaxis_range, num)
 	uniform_yinterval = lambda num=50: np.linspace(-1 * yaxis_range, yaxis_range, num)
 
-	# Sets axes tick markers accordingly
+	# Sets axes tick markers accordingly and hides marker value at origin
 	ax.set_xticks([x for x in uniform_xinterval(7) if x != 0])
 	ax.set_yticks([y for y in uniform_yinterval(6) if y != 0])
 	ax.set_ylim([-1 * (yaxis_range + 1), yaxis_range + 1])
