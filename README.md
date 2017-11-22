@@ -1,4 +1,4 @@
-# Polynomial Tool
+# Polynomial Tool v1.0.0
 
 Contains a Polynomial class that encapsulates the usual arithmetic & calculus operations. I was curious how the `numpy.polynomial.polynomial` implemented its `Polynomial` class, and decided to create my own.
 
@@ -6,29 +6,27 @@ Contains a Polynomial class that encapsulates the usual arithmetic & calculus op
 * **Visual:** includes Plotting tool for custom graphing via `matplotlib.pyplot`
 * **Pretty:** prints "mathematical" representation of Polynomial in a more readable format
 
-I will continue to expand this project by adding more complicated operations such as *division* and *power*.
 
 ## Implementation
 
-To create a new Polynomial, pass in any number of scalars into `Poly()`, each representing the respective degree's coefficient in descending order. For example:
+To create a new Polynomial, pass in any number of scalars into `Poly()`, each representing the respective degree's coefficient in descending order. For example, let's output `x⁵ - 3.0x³ - x² + 0.5x - 3.14`:
 
 ```python
-$ import Polynomial
-$ p = Polynomial.Poly(1, 0, -3, -1, 0.5, -3.14)
-$ print(p)
-
-x⁵ - 3.0x³ - x² + 0.5x - 3.14
+import Polynomial
+p = Polynomial.Poly(1, 0, -3, -1, 0.5, -3.14)
+print(p)
 ```
 
 
 ## Supported Operations
 
-#### Calculus
+### *Calculus*
 * **Derivative:** `differentiate()` returns differentiated `Poly` object
 * **Integral:** `integrate(c)` returns integrated `Poly` object; c is the integrating constant (default = 0)
 
-#### Algebra
+### *Algebra*
 * **Addition:** `__add__()` returns summed `Poly` objects
+* **Subtraction:** `__sub__()` returns summed `Poly` objects
 * **Scalar Multiplication:** `__mul__()` returns scaled `Poly` object
 
 ## Visualization
@@ -50,6 +48,11 @@ polyplot(p1, p2)
 
 [*Coming Soon*] - Currently working on unit tests and will detail each test in this section.
 
+## Future Tasks
 
+- [ ] Implement Unit tests
+- [ ] Create division method
+- [ ] Create power method
+- [ ] Create factoring method
 
 
