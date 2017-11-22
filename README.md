@@ -26,7 +26,7 @@ print(p)
 
 ### *Algebra*
 * **Addition:** `__add__()` returns summed `Poly` objects
-* **Subtraction:** `__sub__()` returns summed `Poly` objects
+* **Subtraction:** `__sub__()` returns differenced `Poly` objects
 * **Scalar Multiplication:** `__mul__()` returns scaled `Poly` object
 
 ## Visualization
