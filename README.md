@@ -25,8 +25,8 @@ print(p)
 * **Integral:** `integrate(c)` returns integrated `Poly` object; c is the integrating constant (default = 0)
 
 ### *Algebra*
-* **Addition:** `__add__()` returns summed `Poly` objects
-* **Subtraction:** `__sub__()` returns differenced `Poly` objects
+* **Addition:** `__add__()` returns summed `Poly` object
+* **Subtraction:** `__sub__()` returns differenced `Poly` object
 * **Scalar Multiplication:** `__mul__()` returns scaled `Poly` object
 
 ## Visualization
