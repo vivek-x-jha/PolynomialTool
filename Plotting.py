@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
-from Polynomial import Poly
 from HelperFuncs import superscript
 
 
@@ -51,4 +49,3 @@ def polyplot(*polys, xaxis_range=3, yaxis_range=10, titleString=''):
 
 	plt.legend(loc='lower right')
 	plt.show()
-
