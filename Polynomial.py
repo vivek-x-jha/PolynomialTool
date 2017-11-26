@@ -22,22 +22,20 @@ class Poly:
 
 			self.coeffs = coeffs
 			self.degree = len(coeffs) - 1
-			self.isConst = (len(coeffs) == 1)  # P(x) = c
-			self.isLinear = (len(coeffs) == 2)  # P(x) = ax + b
 
 		except IndexError:
 			raise IndexError(f'Oops! {type(self).__name__} requires atleast 1 float/int arg')
 
 	def value(self, x):
 		"""Computes P(x=float/int) by implementing a horner schedule"""
-		if self.isConst:
+		if self.degree == 1:
 			return self.coeffs[0]
 		else:
 			return horner(self.degree - 1, self.coeffs, x)
 
 	def differentiate(self):
 		"""Computes differentiated Polynomial object: dP/dx"""
-		if self.isConst:
+		if self.degree == 1:
 			coeffs = (0,)
 		else:
 			coeffs = (self.coeffs[i] * (self.degree - i) for i in range(self.degree))
@@ -50,6 +48,20 @@ class Poly:
 		coeffs.append(const)
 
 		return Poly(*coeffs)
+
+	def tangent(self, x):
+		"""Computes tangent line of a Polynomial at a given point x"""
+		try:
+			dp = self.differentiate()
+			slope = dp.value(x)
+			intercept = self.value(x) - slope * x
+			tline = Poly(slope, intercept)
+
+			return tline
+
+		except ValueError:
+			# Handles case where Polynomial is constant
+			return self
 
 	def __add__(self, other):
 		"""
@@ -89,8 +101,8 @@ class Poly:
 				return Poly(*coeffs)
 
 			except TypeError:
-				raise TypeError(f"Cannot perform field operations using '{type(other).__name__}' -"
-				                f" please use another Poly object or scalar (float/int)")
+				raise TypeError(f"Cannot perform field operation using '{type(other).__name__}' - "
+				                f"please use another Poly object or scalar (float/int)")
 
 	def __radd__(self, other):
 		"""
