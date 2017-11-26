@@ -27,11 +27,13 @@ class Poly:
 			raise IndexError(f'Oops! {type(self).__name__} requires atleast 1 float/int arg')
 
 	def value(self, x):
-		"""Computes P(x=float/int) by implementing a horner schedule"""
-		if self.degree == 1:
-			return self.coeffs[0]
-		else:
+		"""Computes P(x=float/int) by implementing horner's method"""
+		try:
 			return horner(self.degree - 1, self.coeffs, x)
+
+		except RecursionError:
+			# Handles case where Polynomial is constant
+			return self.coeffs[0]
 
 	def differentiate(self):
 		"""Computes differentiated Polynomial object: dP/dx"""
