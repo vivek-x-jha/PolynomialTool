@@ -13,12 +13,12 @@ def horner(term, coeffs, value):
 
 def mathformat(term, coeffs):
 	"""Returns formatted term of Polynomial according to coefficient's parity and input"""
-	# Booleans used for control flow to exhaust all cases
+	c = coeffs[term]
+
+	# Booleans used to test if coeeficient is an edge case term
 	isLeadingTerm = (term == 0)
 	isZeroDegreeTerm = (term == len(coeffs) - 1)
 	isFirstDegreeTerm = (term == len(coeffs) - 2)
-
-	c = coeffs[term]
 
 	# Handles case where polynomial is constant
 	if isLeadingTerm and isZeroDegreeTerm: return str(c)
@@ -53,20 +53,20 @@ def formatcoeff(term, coeffs):
 
 	coeff = '' if (isUnitary and not isConstTerm) else abs(c)
 
-	if c > 0:
+	def formatter(sign):
 		try:
-			formatted = f' + {coeff:.03}'
+			return f' {sign} {coeff:.03}'
 		except ValueError:
-			formatted = f' + {coeff}'
-	elif c < 0:
-		try:
-			formatted = f' - {coeff:.03}'
-		except ValueError:
-			formatted = f' - {coeff}'
-	else:
-		formatted = ''
+			return f' {sign} {coeff}'
 
-	return formatted
+	if c > 0:
+		formattedcoeff = formatter('+')
+	elif c < 0:
+		formattedcoeff = formatter('-')
+	else:
+		formattedcoeff = ''
+
+	return formattedcoeff
 
 
 def superscript(value, reverse=False):
