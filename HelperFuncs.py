@@ -15,12 +15,13 @@ def mathformat(term, coeffs):
 	"""Returns formatted term of Polynomial according to coefficient's parity and input"""
 	# Booleans used for control flow to exhaust all cases
 	isLeadingTerm = (term == 0)
-	isConstTerm = (term == len(coeffs) - 1)
+	isZeroDegreeTerm = (term == len(coeffs) - 1)
+	isFirstDegreeTerm = (term == len(coeffs) - 2)
+
+	c = coeffs[term]
 
 	# Handles case where polynomial is constant
-	if isLeadingTerm and isConstTerm: return str(coeffs[0])
-
-	c = float(coeffs[term])
+	if isLeadingTerm and isZeroDegreeTerm: return str(c)
 
 	# Handles formatting the highest order term's coefficient
 	if c == 1:
@@ -28,21 +29,24 @@ def mathformat(term, coeffs):
 	elif c == -1:
 		leadingstr = '-'
 	else:
-		leadingstr = f'{c:.03}'
+		try:
+			leadingstr = f'{c:.03}'
+		except ValueError:
+			leadingstr = str(c)
 
-	# Formats coefficient accordingly; superscripts degree unless it's the linear term
+	# Formats coefficient accordingly; superscripts degree unless it's the first degree term
 	coeff = leadingstr if isLeadingTerm else formatcoeff(term, coeffs)
 	degree = f'{superscript(len(coeffs) - 1 - term)}'
-	formattedterm = f'{coeff}x' + degree * (degree != '¹')
+	formattedterm = f'{coeff}x' + degree * (not isFirstDegreeTerm)
 
-	polyformat = formatcoeff(term, coeffs) if (isConstTerm or c == 0) else formattedterm
+	polyformat = formatcoeff(term, coeffs) if (isZeroDegreeTerm or c == 0) else formattedterm
 
 	return polyformat
 
 
 def formatcoeff(term, coeffs):
 	"""Transforms coefficient into appropriate str"""
-	c = float(coeffs[term])
+	c = coeffs[term]
 
 	isConstTerm = (term == len(coeffs) - 1)
 	isUnitary = (abs(c) == 1)  # checks if c = 1 or -1
@@ -50,9 +54,15 @@ def formatcoeff(term, coeffs):
 	coeff = '' if (isUnitary and not isConstTerm) else abs(c)
 
 	if c > 0:
-		formatted = f' + {coeff:.03}'
+		try:
+			formatted = f' + {coeff:.03}'
+		except ValueError:
+			formatted = f' + {coeff}'
 	elif c < 0:
-		formatted = f' - {coeff:.03}'
+		try:
+			formatted = f' - {coeff:.03}'
+		except ValueError:
+			formatted = f' - {coeff}'
 	else:
 		formatted = ''
 
