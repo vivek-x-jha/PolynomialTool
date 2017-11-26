@@ -2,7 +2,7 @@ def horner(term, coeffs, value):
 	"""Blueprint for calculating value of a Polynomial recursively"""
 	# speeds up calculation by reducing the number of multiplication calls to the degree of the polynomial
 	if term == 0:
-		init_val = coeffs[0] * value+ coeffs[1]
+		init_val = coeffs[0] * value + coeffs[1]
 		return init_val
 	else:
 		next_val = horner(term - 1, coeffs, value) * value + coeffs[term + 1]
