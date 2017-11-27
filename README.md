@@ -9,7 +9,7 @@ Contains a Polynomial class that encapsulates the usual arithmetic & calculus op
 
 ## Implementation
 
-To create a new Polynomial, pass in any number of scalars into `Poly()`, each representing the respective degree's coefficient in descending order. For example, let's output `x⁵ - 3.0x³ - x² + 0.5x - 3.14`:
+To create a new Polynomial, pass in any number of scalars into `Poly()`, each representing the respective degree's coefficient in descending order. For example, to output `x⁵ - 3.0x³ - x² + 0.5x - 3.14`:
 
 ```python
 import Polynomial
