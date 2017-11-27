@@ -22,6 +22,7 @@ print(p)
 
 ### *Calculus*
 * **Derivative:** `differentiate()` returns differentiated `Poly` object
+* **Tangent Line:** `tangent(x)` returns a line (i.e. Linear Polynomial) representing the tangent line of a Polynomial at a given point x
 * **Integral:** `integrate(c)` returns integrated `Poly` object; c is the integrating constant (default = 0)
 
 ### *Algebra*
@@ -50,7 +51,8 @@ polyplot(p1, p2)
 
 ## Future Tasks
 
-- [ ] Implement Unit tests
+- [X] Implement Unit Test for value method
+- [X] Create Tangent method
 - [ ] Create division method
 - [ ] Create power method
 - [ ] Create factoring method
