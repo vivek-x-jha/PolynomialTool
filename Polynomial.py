@@ -3,18 +3,20 @@ from argparse import ArgumentParser
 
 class Poly:
 	"""
-	Polynomial(*coeffs) -> Polynomial
+	Blueprint for creating a Polynomial object
+
+	Var-positional parameter: *coeffs
 
 	Supports:
 	- Computing real-valued polynomials for any given float/int
 	- Field operations: can add, subtract, & scalar multiply polynomials
-	- Calculus opeartions: can differentatiate & integrate polynomials
+	- Calculus opeartions: can differentatiate, create tangent line, & integrate polynomials
 	"""
 
 	def __init__(self, *coeffs):
 		"""
-		Creates a new Polynomial object by passing in floats/ints
-		Passed in args correspond to coefficients in decreasing degree order
+		Initializes a new Polynomial object by passing in numerial values
+		Passed in args represent coefficients in decreasing degree order
 		"""
 		try:
 			if coeffs[0] == 0 and len(coeffs) > 1:
