@@ -1,5 +1,5 @@
 from HelperFuncs import mathformat, horner
-
+from argparse import ArgumentParser
 
 class Poly:
 	"""
@@ -154,3 +154,17 @@ class Poly:
 		poly = ''.join(mathformat(k, self.coeffs) for k in range(self.degree + 1))
 
 		return poly
+
+
+def main():
+	parser = ArgumentParser(description='Prints string formatted Polynomial instance using variable-length coeffs')
+	parser.add_argument('-c', '--coeffs', type=float, nargs='+', metavar='', help='Numerical coefficients in descending order')
+	args = parser.parse_args()
+
+	p = Poly(*args.coeffs)
+
+	formattedPolynomial = f'P(x) = {p}'
+	print(formattedPolynomial)
+
+if __name__ == '__main__':
+	main()
