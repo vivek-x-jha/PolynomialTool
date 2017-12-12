@@ -1,5 +1,6 @@
 from HelperFuncs import mathformat, horner
-from argparse import ArgumentParser
+import argparse
+
 
 class Poly:
 	"""
@@ -18,6 +19,7 @@ class Poly:
 		Initializes a new Polynomial object by passing in numerial values
 		Passed in args represent coefficients in decreasing degree order
 		"""
+
 		try:
 			if coeffs[0] == 0 and len(coeffs) > 1:
 				raise ValueError('First argument of non-constant Polynomial must be non-zero')
@@ -30,6 +32,7 @@ class Poly:
 
 	def value(self, x):
 		"""Computes P(x=float/int) by implementing horner's method"""
+
 		try:
 			return horner(self.degree - 1, self.coeffs, x)
 
@@ -39,6 +42,7 @@ class Poly:
 
 	def differentiate(self):
 		"""Computes differentiated Polynomial object: dP/dx"""
+
 		if self.degree == 1:
 			coeffs = (0,)
 		else:
@@ -48,6 +52,7 @@ class Poly:
 
 	def integrate(self, const=0):
 		"""Computes integrated Polynomial object given some integrating constant: ∫P(x)dx + c"""
+
 		coeffs = [self.coeffs[i] / (self.degree + 1 - i) for i in range(self.degree + 1)]
 		coeffs.append(const)
 
@@ -55,6 +60,7 @@ class Poly:
 
 	def tangent(self, x):
 		"""Computes tangent line of a Polynomial at a given point x"""
+
 		try:
 			dp = self.differentiate()
 			slope = dp.value(x)
@@ -72,6 +78,7 @@ class Poly:
 		Polynomial(*coeffs1) + Polynomial(*coeffs2) -> Polynomial(*coeffs3)
 		Polynomial(*coeffs4) + float/int -> Polynomial(*coeffs5)
 		"""
+
 		try:
 			# Prepends smaller degree polynomial with leading 0's
 			diff = self.degree - other.degree
@@ -113,10 +120,12 @@ class Poly:
 		Polynomial(*coeffs1) + Polynomial(*coeffs2) -> Polynomial(*coeffs3)
 		float/int + Polynomial(*coeffs4) -> Polynomial(*coeffs5)
 		"""
+
 		return self + other
 
 	def __mul__(self, scalar):
 		"""Polynomial(coeffs=tuple) * float/int -> Polynomial(coeffs=tuple2)"""
+
 		if not isinstance(scalar, (float, int)):
 			raise TypeError(f"'{type(scalar).__name__}' object cannot be multiplied"
 			                f" - only supports scalar (float/int) multiplication")
@@ -129,6 +138,7 @@ class Poly:
 
 	def __rmul__(self, other):
 		"""float/int * Polynomial(coeffs=tuple) -> Polynomial(coeffs=tuple2)"""
+
 		return self * other
 
 	def __sub__(self, other):
@@ -136,6 +146,7 @@ class Poly:
 		Polynomial(*coeffs1) - Polynomial(*coeffs2) -> Polynomial(*coeffs3)
 		Polynomial(*coeffs4) - float/int -> Polynomial(*coeffs5)
 		"""
+
 		return self + (-1 * other)
 
 	def __rsub__(self, other):
@@ -143,6 +154,7 @@ class Poly:
 		Polynomial(*coeffs1) - Polynomial(*coeffs2) -> Polynomial(*coeffs3)
 		float/int - Polynomial(*coeffs4) -> Polynomial(*coeffs5)
 		"""
+
 		return other + (-1 * self)
 
 	def __repr__(self):
@@ -153,20 +165,25 @@ class Poly:
 		Displays 'mathematical' representation of polynomial:
 		i.e. Polynomial(-1, 0, 0, 0, -2, 0, 1) ->  -x⁶ - 2x² + 1
 		"""
+
 		poly = ''.join(mathformat(k, self.coeffs) for k in range(self.degree + 1))
 
 		return poly
 
 
 def main():
-	parser = ArgumentParser(description='Prints string formatted Polynomial instance using variable-length coeffs')
-	parser.add_argument('-c', '--coeffs', type=float, nargs='+', metavar='', help='Numerical coefficients in descending order')
+	desc = 'Prints string formatted Polynomial instance using variable-length coeffs'
+
+	parser = argparse.ArgumentParser(description=desc)
+	parser.add_argument('-c', '--coeffs', type=float, nargs='+', metavar='',
+	                    help='Numerical coefficients in descending order')
 	args = parser.parse_args()
 
 	p = Poly(*args.coeffs)
 
 	formattedPolynomial = f'P(x) = {p}'
 	print(formattedPolynomial)
+
 
 if __name__ == '__main__':
 	main()
