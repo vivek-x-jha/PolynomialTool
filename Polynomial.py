@@ -37,7 +37,7 @@ class Poly:
 			return horner(self.degree - 1, self.coeffs, x)
 
 		except RecursionError:
-			# Handles case where Polynomial is constant
+			# Handles case where Polynomial is constan 
 			return self.coeffs[0]
 
 	def differentiate(self):
@@ -167,7 +167,6 @@ class Poly:
 		"""
 
 		poly = ''.join(mathformat(k, self.coeffs) for k in range(self.degree + 1))
-
 		return poly
 
 
@@ -175,8 +174,13 @@ def main():
 	desc = 'Prints string formatted Polynomial instance using variable-length coeffs'
 
 	parser = argparse.ArgumentParser(description=desc)
-	parser.add_argument('-c', '--coeffs', type=float, nargs='+', metavar='',
-	                    help='Numerical coefficients in descending order')
+	parser_config = {
+                'type': float,
+                'nargs': '+',
+                'metavar': '',
+                'help': 'Numerical coefficients in descending order'  
+        }
+        parser.add_argument('-c', '--coeffs', **parser_configs)
 	args = parser.parse_args()
 
 	p = Poly(*args.coeffs)
