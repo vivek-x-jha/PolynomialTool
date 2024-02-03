@@ -175,12 +175,12 @@ def main():
 
 	parser = argparse.ArgumentParser(description=desc)
 	parser_config = {
-                'type': float,
-                'nargs': '+',
-                'metavar': '',
-                'help': 'Numerical coefficients in descending order'  
-        }
-        parser.add_argument('-c', '--coeffs', **parser_configs)
+        'type': float,
+        'nargs': '+',
+        'metavar': '',
+        'help': 'Numerical coefficients in descending order'  
+    }
+	parser.add_argument('-c', '--coeffs', **parser_configs)
 	args = parser.parse_args()
 
 	p = Poly(*args.coeffs)
