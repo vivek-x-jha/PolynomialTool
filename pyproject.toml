@@ -1,0 +1,7 @@
+[project]
+name = "polynomialtool"
+version = "0.1.0"
+description = "Models a mathematical polynomial object"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
