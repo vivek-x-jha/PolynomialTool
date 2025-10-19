@@ -1,81 +1,88 @@
-def horner(term, coeffs, value):
-	"""Blueprint for calculating value of a Polynomial recursively"""
-	# speeds up calculation by reducing the number of multiplication calls to the degree of the polynomial
-	if term == 0:
-		init_val = coeffs[0] * value + coeffs[1]
-		return init_val
-	else:
-		next_val = horner(term - 1, coeffs, value) * value + coeffs[term + 1]
-		return next_val
+from typing import Literal, Sequence
+
+Number = float | int
+
+
+def horner(term: int, coeffs: Sequence[Number], value: Number) -> float:
+    """Blueprint for calculating value of a Polynomial recursively"""
+    # speeds up calculation by reducing the number of multiplication calls to the degree of the polynomial
+    if term == 0:
+        init_val = coeffs[0] * value + coeffs[1]
+        return init_val
+    else:
+        next_val = horner(term - 1, coeffs, value) * value + coeffs[term + 1]
+        return next_val
 
 
 # Support functions for Poly.__str__ method
 
-def mathformat(term, coeffs):
-	"""Returns formatted term of Polynomial according to coefficient's parity and input"""
-	c = coeffs[term]
 
-	# Booleans used to test if coeeficient is an edge case term
-	isLeadingTerm = (term == 0)
-	isZeroDegreeTerm = (term == len(coeffs) - 1)
-	isFirstDegreeTerm = (term == len(coeffs) - 2)
+def mathformat(term: int, coeffs: Sequence[Number]) -> str:
+    """Returns formatted term of Polynomial according to coefficient's parity and input"""
+    c = coeffs[term]
 
-	# Handles case where polynomial is constant
-	if isLeadingTerm and isZeroDegreeTerm: return str(c)
+    # Booleans used to test if coeeficient is an edge case term
+    isLeadingTerm = term == 0
+    isZeroDegreeTerm = term == len(coeffs) - 1
+    isFirstDegreeTerm = term == len(coeffs) - 2
 
-	# Handles formatting the highest order term's coefficient
-	if c == 1:
-		leadingstr = ''
-	elif c == -1:
-		leadingstr = '-'
-	else:
-		try:
-			leadingstr = f'{c:.03}'
-		except ValueError:
-			leadingstr = str(c)
+    # Handles case where polynomial is constant
+    if isLeadingTerm and isZeroDegreeTerm:
+        return str(c)
 
-	# Formats coefficient accordingly; superscripts degree unless it's the first degree term
-	coeff = leadingstr if isLeadingTerm else formatcoeff(term, coeffs)
-	degree = f'{superscript(len(coeffs) - 1 - term)}'
-	formattedterm = f'{coeff}x' + degree * (not isFirstDegreeTerm)
+    # Handles formatting the highest order term's coefficient
+    if c == 1:
+        leadingstr = ''
+    elif c == -1:
+        leadingstr = '-'
+    else:
+        try:
+            leadingstr = f'{c:.03}'
+        except ValueError:
+            leadingstr = str(c)
 
-	polyformat = formatcoeff(term, coeffs) if (isZeroDegreeTerm or c == 0) else formattedterm
+    # Formats coefficient accordingly; superscripts degree unless it's the first degree term
+    coeff = leadingstr if isLeadingTerm else formatcoeff(term, coeffs)
+    degree = f'{superscript(len(coeffs) - 1 - term)}'
+    formattedterm = f'{coeff}x' + degree * (not isFirstDegreeTerm)
 
-	return polyformat
+    polyformat = formatcoeff(term, coeffs) if (isZeroDegreeTerm or c == 0) else formattedterm
 
-
-def formatcoeff(term, coeffs):
-	"""Transforms coefficient into appropriate str"""
-	c = coeffs[term]
-
-	isConstTerm = (term == len(coeffs) - 1)
-	isUnitary = (abs(c) == 1)  # checks if c = 1 or -1
-
-	coeff = '' if (isUnitary and not isConstTerm) else abs(c)
-
-	def formatter(sign):
-		try:
-			return f' {sign} {coeff:.03}'
-		except ValueError:
-			return f' {sign} {coeff}'
-
-	if c > 0:
-		formattedcoeff = formatter('+')
-	elif c < 0:
-		formattedcoeff = formatter('-')
-	else:
-		formattedcoeff = ''
-
-	return formattedcoeff
+    return polyformat
 
 
-def superscript(value, reverse=False):
-	"""
-	Returns a str with any numbers superscripted: H2SO4 -> H²SO⁴
-	Change reverse param to 'True' to subscript: H2SO4 -> H₂SO₄
-	"""
-	digits = ('⁰¹²³⁴⁵⁶⁷⁸⁹', '₀₁₂₃₄₅₆₇₈₉')[reverse]
-	transtable = str.maketrans("0123456789", digits)
-	formatted = str(value).translate(transtable)
+def formatcoeff(term: int, coeffs: Sequence[Number]) -> str:
+    """Transforms coefficient into appropriate str"""
+    c = coeffs[term]
 
-	return formatted
+    isConstTerm = term == len(coeffs) - 1
+    isUnitary = abs(c) == 1  # checks if c = 1 or -1
+
+    coeff = '' if (isUnitary and not isConstTerm) else abs(c)
+
+    def formatter(sign: Literal['+', '-']):
+        try:
+            return f' {sign} {coeff:.03}'
+        except ValueError:
+            return f' {sign} {coeff}'
+
+    if c > 0:
+        formattedcoeff = formatter('+')
+    elif c < 0:
+        formattedcoeff = formatter('-')
+    else:
+        formattedcoeff = ''
+
+    return formattedcoeff
+
+
+def superscript(value: object, reverse: bool = False) -> str:
+    """
+    Returns a str with any numbers superscripted: H2SO4 -> H²SO⁴
+    Change reverse param to 'True' to subscript: H2SO4 -> H₂SO₄
+    """
+    digits = ('⁰¹²³⁴⁵⁶⁷⁸⁹', '₀₁₂₃₄₅₆₇₈₉')[reverse]
+    transtable = str.maketrans('0123456789', digits)
+    formatted = str(value).translate(transtable)
+
+    return formatted
